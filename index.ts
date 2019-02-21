@@ -16,13 +16,16 @@ search({
     body: {
         aggs: {
             test: {
-                cardinality: {
-                    field: "aa",
-                    precision_threshold: 2
+                adjacency_matrix: {
+                    filters: {
+                        grpA: {
+                            terms: { account: ["a"] }
+                        }
+                    }
                 }
             }
         }
     }
 }).then(results => {
-    results.aggregations.test.value;
+    results.aggregations.test.buckets.map(bucket => bucket);
 });

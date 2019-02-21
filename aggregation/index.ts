@@ -53,6 +53,14 @@ import {
     TermsAggregationRequest,
     TermsAggregationResponse
 } from "./bucket/terms";
+import {
+    MedianAbsoluteDeviationAggregationRequest,
+    MedianAbsoluteDeviationAggregationResponse
+} from "./metrics/median_absolute_deviation";
+import {
+    AdjacencyMatrixAggregationRequest,
+    AdjacencyMatrixAggregationResponse
+} from "./bucket/adjacency_matrix";
 
 export type AggregationEntry<T> =
     // Metrics
@@ -68,6 +76,8 @@ export type AggregationEntry<T> =
         ? GeoCentroidAggregationResponse
         : T extends MaxAggregationRequest
         ? MaxAggregationResponse
+        : T extends MedianAbsoluteDeviationAggregationRequest
+        ? MedianAbsoluteDeviationAggregationResponse
         : T extends MinAggregationRequest
         ? MinAggregationResponse
         : T extends PercentileRanksKeyedAggregationRequest
@@ -90,6 +100,8 @@ export type AggregationEntry<T> =
         ? WeightedAvgAggregationResponse // Buckets
         : T extends TermsAggregationRequest<infer U>
         ? TermsAggregationResponse<U>
+        : T extends AdjacencyMatrixAggregationRequest
+        ? AdjacencyMatrixAggregationResponse
         : never;
 
 export interface AggregationResponse<T> {
@@ -104,6 +116,7 @@ export type AggregationRequest =
     | GeoBoundsAggregationRequest
     | GeoCentroidAggregationRequest
     | MaxAggregationRequest
+    | MedianAbsoluteDeviationAggregationRequest
     | MinAggregationRequest
     | PercentileRanksKeyedAggregationRequest
     | PercentileRanksUnKeyedAggregationRequest
@@ -115,4 +128,5 @@ export type AggregationRequest =
     | ValueCountAggregationRequest
     | WeightedAvgAggregationRequest
     // Buckets
-    | TermsAggregationRequest<any>;
+    | TermsAggregationRequest<any>
+    | AdjacencyMatrixAggregationRequest;
