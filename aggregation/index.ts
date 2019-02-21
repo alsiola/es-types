@@ -61,6 +61,14 @@ import {
     AdjacencyMatrixAggregationRequest,
     AdjacencyMatrixAggregationResponse
 } from "./bucket/adjacency_matrix";
+import {
+    AutoDateHistogramAggregationRequest,
+    AutoDateHistogramAggregationResponse
+} from "./bucket/auto_date_histogram";
+import {
+    ChildrenAggregationRequest,
+    ChildrenAggregationResponse
+} from "./bucket/children";
 
 export type AggregationEntry<T> =
     // Metrics
@@ -100,13 +108,22 @@ export type AggregationEntry<T> =
         ? WeightedAvgAggregationResponse // Buckets
         : T extends TermsAggregationRequest<infer U>
         ? TermsAggregationResponse<U>
-        : T extends AdjacencyMatrixAggregationRequest
-        ? AdjacencyMatrixAggregationResponse
+        : T extends AdjacencyMatrixAggregationRequest<infer U>
+        ? AdjacencyMatrixAggregationResponse<U>
+        : T extends AutoDateHistogramAggregationRequest<infer U>
+        ? AutoDateHistogramAggregationResponse<U>
+        : T extends ChildrenAggregationRequest<infer U>
+        ? ChildrenAggregationResponse<U>
         : never;
 
-export interface AggregationResponse<T> {
-    aggregations?: { [K in keyof T]: AggregationEntry<T[K]> };
-}
+export type AggregationResponse<T> = T extends Record<
+    string,
+    AggregationRequest
+>
+    ? {
+          aggregations?: { [K in keyof T]: AggregationEntry<T[K]> };
+      }
+    : {};
 
 export type AggregationRequest =
     // Metrics
@@ -129,4 +146,6 @@ export type AggregationRequest =
     | WeightedAvgAggregationRequest
     // Buckets
     | TermsAggregationRequest<any>
-    | AdjacencyMatrixAggregationRequest;
+    | AdjacencyMatrixAggregationRequest<any>
+    | AutoDateHistogramAggregationRequest<any>
+    | ChildrenAggregationRequest<any>;
