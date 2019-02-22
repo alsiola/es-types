@@ -74,17 +74,16 @@ export interface CompositeAggregationResponse<
     buckets: Array<
         { doc_count: number } & {
             key: {
-                [K in keyof V]-?: V[K] extends Exclude<
-                    CompositeSourceHistogram,
-                    "field"
+                [K in keyof V]-?: Exclude<
+                    V[K] extends undefined
+                        ? never
+                        : V[K] extends CompositeSourceHistogram
+                        ? number
+                        : V[K] extends CompositeSourceDateHistogram
+                        ? number
+                        : string,
+                    never
                 >
-                    ? number
-                    : V[K] extends Exclude<
-                          CompositeSourceDateHistogram,
-                          "field"
-                      >
-                    ? number
-                    : string
             };
         }
     > &
