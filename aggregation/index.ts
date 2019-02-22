@@ -69,6 +69,10 @@ import {
     ChildrenAggregationRequest,
     ChildrenAggregationResponse
 } from "./bucket/children";
+import {
+    CompositeAggregationRequest,
+    CompositeAggregationResponse
+} from "./bucket/composite";
 
 export type AggregationEntry<T> =
     // Metrics
@@ -114,6 +118,8 @@ export type AggregationEntry<T> =
         ? AutoDateHistogramAggregationResponse<U>
         : T extends ChildrenAggregationRequest<infer U>
         ? ChildrenAggregationResponse<U>
+        : T extends CompositeAggregationRequest<infer U, infer V, infer W>
+        ? CompositeAggregationResponse<U, V, W>
         : never;
 
 export type AggregationResponse<T> = T extends Record<
@@ -148,4 +154,5 @@ export type AggregationRequest =
     | TermsAggregationRequest<any>
     | AdjacencyMatrixAggregationRequest<any>
     | AutoDateHistogramAggregationRequest<any>
-    | ChildrenAggregationRequest<any>;
+    | ChildrenAggregationRequest<any>
+    | CompositeAggregationRequest<any, any, any>;

@@ -16,16 +16,19 @@ search({
     body: {
         aggs: {
             test: {
-                adjacency_matrix: {
-                    filters: {
-                        grpA: {
-                            terms: { account: ["a"] }
+                composite: {
+                    sources: [
+                        { testbbb: { terms: { field: "ddd" } } },
+                        {
+                            testaaa: {
+                                histogram: { field: "ddd", interval: 3 }
+                            }
                         }
-                    }
+                    ]
                 }
             }
         }
     }
 }).then(results => {
-    results.aggregations.test.buckets.map(bucket => bucket);
+    results.aggregations.test.buckets.map(bucket => bucket.key);
 });
