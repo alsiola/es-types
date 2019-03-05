@@ -73,6 +73,12 @@ import {
     CompositeAggregationRequest,
     CompositeAggregationResponse
 } from "./bucket/composite";
+import {
+    DateHistogramAggregationRequest,
+    KeyedDateHistogramAggregationRequest,
+    KeyedDateHistogramAggregationResponse,
+    DateHistogramAggregationResponse
+} from "./bucket/date_histogram";
 
 export type AggregationEntry<T> =
     // Metrics
@@ -120,6 +126,10 @@ export type AggregationEntry<T> =
         ? ChildrenAggregationResponse<U>
         : T extends CompositeAggregationRequest<infer U, infer V, infer W>
         ? CompositeAggregationResponse<U, V, W>
+        : T extends KeyedDateHistogramAggregationRequest<infer U>
+        ? KeyedDateHistogramAggregationResponse<U>
+        : T extends DateHistogramAggregationRequest<infer U>
+        ? DateHistogramAggregationResponse<U>
         : never;
 
 export type AggregationResponse<T> = T extends Record<
@@ -155,4 +165,5 @@ export type AggregationRequest =
     | AdjacencyMatrixAggregationRequest<any>
     | AutoDateHistogramAggregationRequest<any>
     | ChildrenAggregationRequest<any>
-    | CompositeAggregationRequest<any, any, any>;
+    | CompositeAggregationRequest<any, any, any>
+    | DateHistogramAggregationRequest<any>;

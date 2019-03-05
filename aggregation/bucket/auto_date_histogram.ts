@@ -6,7 +6,7 @@ export interface AutoDateHistogramAggregationRequest<
     auto_date_histogram: {
         field: string;
         buckets: number;
-        format: string;
+        format?: string;
         time_zone?: string;
         missing?: string;
     };
