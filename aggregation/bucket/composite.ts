@@ -85,7 +85,6 @@ export interface CompositeAggregationResponse<
                     never
                 >
             };
-        }
-    > &
-        AggregationResponse<T>;
+        } & AggregationResponse<T>
+    >;
 }

@@ -25,10 +25,19 @@ search({
                             }
                         }
                     ]
+                },
+                aggs: {
+                    ddd: {
+                        avg: {
+                            field: ""
+                        }
+                    }
                 }
             }
         }
     }
 }).then(results => {
-    results.aggregations.test.buckets.map(bucket => bucket.key);
+    results.aggregations.test.buckets.map(
+        bucket => bucket.aggregations.ddd.value
+    );
 });
