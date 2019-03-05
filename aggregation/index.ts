@@ -79,10 +79,14 @@ import {
     KeyedDateHistogramAggregationResponse,
     DateHistogramAggregationResponse
 } from "./bucket/date_histogram";
+import { NestedAggregationRequest, NestedAggregationResponse } from "./nested";
 
 export type AggregationEntry<T> =
-    // Metrics
-    T extends AverageAggregationRequest
+    // Nested
+    T extends NestedAggregationRequest<infer U>
+        ? NestedAggregationResponse<U>
+        : // Metrics
+        T extends AverageAggregationRequest
         ? AverageAggregationResponse
         : T extends CardinalityAggregationRequest
         ? CardinalityAggregationResponse
@@ -142,6 +146,8 @@ export type AggregationResponse<T> = T extends Record<
     : {};
 
 export type AggregationRequest =
+    // Nested
+    | NestedAggregationRequest<any>
     // Metrics
     | AverageAggregationRequest
     | CardinalityAggregationRequest

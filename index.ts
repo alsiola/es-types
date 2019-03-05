@@ -16,15 +16,8 @@ search({
     body: {
         aggs: {
             test: {
-                composite: {
-                    sources: [
-                        { testbbb: { terms: { field: "ddd" } } },
-                        {
-                            testaaa: {
-                                histogram: { field: "ddd", interval: 3 }
-                            }
-                        }
-                    ]
+                nested: {
+                    path: ""
                 },
                 aggs: {
                     ddd: {
@@ -37,7 +30,5 @@ search({
         }
     }
 }).then(results => {
-    results.aggregations.test.buckets.map(
-        bucket => bucket.aggregations.ddd.value
-    );
+    results.aggregations.test.aggregations.ddd.value;
 });

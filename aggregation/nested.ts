@@ -1,8 +1,14 @@
-interface NestedAggregationRequest<T> {
+import { AggregationResponse, AggregationRequest } from ".";
+
+export interface NestedAggregationRequest<
+    T extends Record<string, AggregationRequest>
+> {
     nested: {
-        field: string;
-        aggs: { [name: string]: T };
+        path: string;
     };
+    aggs?: T;
 }
 
-// type NestedAggregationResponse<T> = AggregationResponse<T>;
+export type NestedAggregationResponse<
+    T extends Record<string, AggregationRequest>
+> = AggregationResponse<T>;
