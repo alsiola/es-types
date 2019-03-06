@@ -16,8 +16,10 @@ search({
     body: {
         aggs: {
             test: {
-                nested: {
-                    path: ""
+                date_range: {
+                    field: "",
+                    ranges: [{ to: "" }],
+                    keyed: true as true
                 },
                 aggs: {
                     ddd: {
@@ -30,5 +32,5 @@ search({
         }
     }
 }).then(results => {
-    results.aggregations.test.aggregations.ddd.value;
+    results.aggregations.test.buckets.ccc.aggregations.ddd.value;
 });
