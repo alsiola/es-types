@@ -79,7 +79,10 @@ import {
     KeyedDateHistogramAggregationResponse,
     DateHistogramAggregationResponse
 } from "./bucket/date_histogram";
-import { NestedAggregationRequest, NestedAggregationResponse } from "./nested";
+import {
+    NestedAggregationRequest,
+    NestedAggregationResponse
+} from "./bucket/nested";
 import {
     DateRangeAggregationRequest,
     DateRangeAggregationResponse,
@@ -155,6 +158,8 @@ export type AggregationEntry<T> =
         ? DiversifiedSamplerResponse<U>
         : T extends FilterAggregationRequest<infer U>
         ? FilterAggregationResponse<U>
+        : T extends NestedAggregationRequest<infer U>
+        ? NestedAggregationResponse<U>
         : never;
 
 export type MappedAggregations<T extends Record<string, AggregationRequest>> = {
@@ -200,4 +205,5 @@ export type AggregationRequest =
     | DateHistogramAggregationRequest<any>
     | DateRangeAggregationRequest<any>
     | DiversifiedSamplerRequest<any>
-    | FilterAggregationRequest<any>;
+    | FilterAggregationRequest<any>
+    | NestedAggregationRequest<any>;

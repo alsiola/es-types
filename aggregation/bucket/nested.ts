@@ -1,4 +1,4 @@
-import { AggregationResponse, AggregationRequest } from ".";
+import { AggregationRequest, MappedAggregations } from "..";
 
 export interface NestedAggregationRequest<
     T extends Record<string, AggregationRequest>
@@ -11,4 +11,4 @@ export interface NestedAggregationRequest<
 
 export type NestedAggregationResponse<
     T extends Record<string, AggregationRequest>
-> = AggregationResponse<T>;
+> = MappedAggregations<T>;

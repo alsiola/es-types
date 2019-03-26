@@ -19,9 +19,8 @@ search({
     body: {
         aggs: {
             test: {
-                filter: {
-                    field: "",
-                    execution_hint: ExecutionHint.bytes_hash
+                nested: {
+                    path: ""
                 },
                 aggs: {
                     ddd: {
