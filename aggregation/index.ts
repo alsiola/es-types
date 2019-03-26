@@ -90,6 +90,10 @@ import {
     DiversifiedSamplerRequest,
     DiversifiedSamplerResponse
 } from "./bucket/diversified_sampler";
+import {
+    FilterAggregationRequest,
+    FilterAggregationResponse
+} from "./bucket/filter";
 
 export type AggregationEntry<T> =
     // Nested
@@ -149,14 +153,20 @@ export type AggregationEntry<T> =
         ? DateRangeAggregationResponse<U>
         : T extends DiversifiedSamplerRequest<infer U>
         ? DiversifiedSamplerResponse<U>
+        : T extends FilterAggregationRequest<infer U>
+        ? FilterAggregationResponse<U>
         : never;
+
+export type MappedAggregations<T extends Record<string, AggregationRequest>> = {
+    [K in keyof T]: AggregationEntry<T[K]>
+};
 
 export type AggregationResponse<T> = T extends Record<
     string,
     AggregationRequest
 >
     ? {
-          aggregations?: { [K in keyof T]: AggregationEntry<T[K]> };
+          aggregations?: MappedAggregations<T>;
       }
     : {};
 
@@ -189,4 +199,5 @@ export type AggregationRequest =
     | CompositeAggregationRequest<any, any, any>
     | DateHistogramAggregationRequest<any>
     | DateRangeAggregationRequest<any>
-    | DiversifiedSamplerRequest<any>;
+    | DiversifiedSamplerRequest<any>
+    | FilterAggregationRequest<any>;

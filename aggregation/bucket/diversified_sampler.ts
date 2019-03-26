@@ -1,4 +1,4 @@
-import { AggregationRequest, AggregationResponse, AggregationEntry } from "..";
+import { AggregationRequest, MappedAggregations } from "..";
 import { MetricsRequest } from "../metrics";
 import { ExecutionHint } from "../execution_hint";
 
@@ -13,8 +13,8 @@ export interface DiversifiedSamplerRequest<
     aggs?: T;
 }
 
-export type DiversifiedSamplerResponse<T> = {
-    [K in keyof T]: AggregationEntry<T[K]>
-} & {
+export type DiversifiedSamplerResponse<
+    T extends Record<string, AggregationRequest>
+> = MappedAggregations<T> & {
     doc_count: number;
 };
