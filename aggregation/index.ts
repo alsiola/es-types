@@ -86,6 +86,10 @@ import {
     KeyedDateRangeAggregationRequest,
     KeyedDateRangeAggregationResponse
 } from "./bucket/date_range";
+import {
+    DiversifiedSamplerRequest,
+    DiversifiedSamplerResponse
+} from "./bucket/diversified_sampler";
 
 export type AggregationEntry<T> =
     // Nested
@@ -143,6 +147,8 @@ export type AggregationEntry<T> =
         ? KeyedDateRangeAggregationResponse<U>
         : T extends DateRangeAggregationRequest<infer U>
         ? DateRangeAggregationResponse<U>
+        : T extends DiversifiedSamplerRequest<infer U>
+        ? DiversifiedSamplerResponse<U>
         : never;
 
 export type AggregationResponse<T> = T extends Record<
@@ -182,4 +188,5 @@ export type AggregationRequest =
     | ChildrenAggregationRequest<any>
     | CompositeAggregationRequest<any, any, any>
     | DateHistogramAggregationRequest<any>
-    | DateRangeAggregationRequest<any>;
+    | DateRangeAggregationRequest<any>
+    | DiversifiedSamplerRequest<any>;

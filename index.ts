@@ -16,10 +16,8 @@ search({
     body: {
         aggs: {
             test: {
-                date_range: {
-                    field: "",
-                    ranges: [{ to: "" }],
-                    keyed: true as true
+                diversified_sampler: {
+                    field: ""
                 },
                 aggs: {
                     ddd: {
@@ -32,5 +30,5 @@ search({
         }
     }
 }).then(results => {
-    results.aggregations.test.buckets.ccc.aggregations.ddd.value;
+    results.aggregations.test.ddd.value;
 });
