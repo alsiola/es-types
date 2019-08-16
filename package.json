@@ -1,0 +1,27 @@
+{
+  "name": "es-types",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "dependencies": {
+    "elasticsearch": "^16.3.0"
+  },
+  "devDependencies": {
+    "@types/elasticsearch": "^5.0.34",
+    "@types/node": "^12.7.2",
+    "typescript": "^3.5.3"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alsiola/es-types.git"
+  },
+  "author": "Alex Young",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alsiola/es-types/issues"
+  },
+  "homepage": "https://github.com/alsiola/es-types#readme"
+}
