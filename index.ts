@@ -19,19 +19,17 @@ search({
     body: {
         aggs: {
             test: {
-                nested: {
-                    path: ""
-                },
-                aggs: {
-                    ddd: {
-                        avg: {
-                            field: ""
-                        }
-                    }
+                filters: {
+                    filters: {
+                        a: {},
+                        b: {}
+                    },
+                    other_bucket: true as true
                 }
             }
         }
     }
 }).then(results => {
-    results.aggregations.test.ddd.value;
+    results.aggregations.test.a.doc_count
+    results.aggregations.test.hello.doc_count
 });

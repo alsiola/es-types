@@ -1,8 +1,4 @@
-import {
-    AggregationRequest,
-    AggregationResponse,
-    MappedAggregations
-} from "..";
+import { AggregationRequest, MappedAggregations } from "..";
 import { Query } from "../../query";
 
 export interface FilterAggregationRequest<

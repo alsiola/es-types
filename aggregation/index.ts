@@ -97,6 +97,10 @@ import {
     FilterAggregationRequest,
     FilterAggregationResponse
 } from "./bucket/filter";
+import {
+    FiltersAggregationRequest,
+    FiltersAggregationResponse
+} from "./bucket/filters";
 
 export type AggregationEntry<T> =
     // Nested
@@ -160,6 +164,13 @@ export type AggregationEntry<T> =
         ? FilterAggregationResponse<U>
         : T extends NestedAggregationRequest<infer U>
         ? NestedAggregationResponse<U>
+        : T extends FiltersAggregationRequest<
+              infer U,
+              infer V,
+              infer W,
+              infer X
+          >
+        ? FiltersAggregationResponse<U, V, W, X>
         : never;
 
 export type MappedAggregations<T extends Record<string, AggregationRequest>> = {
@@ -206,4 +217,5 @@ export type AggregationRequest =
     | DateRangeAggregationRequest<any>
     | DiversifiedSamplerRequest<any>
     | FilterAggregationRequest<any>
-    | NestedAggregationRequest<any>;
+    | NestedAggregationRequest<any>
+    | FiltersAggregationRequest<any, any, any, any>;
